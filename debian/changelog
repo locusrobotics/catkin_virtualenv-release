@@ -1,0 +1,40 @@
+ros-lunar-test-catkin-virtualenv (0.1.3-0xenial) xenial; urgency=high
+
+
+
+ -- Paul Bovbel <pbovbel@locusrobotics.com>  Mon, 27 Nov 2017 05:00:00 -0000
+
+ros-lunar-test-catkin-virtualenv (0.1.2-0xenial) xenial; urgency=high
+
+  * Drop rosbash dependency and move python scripts into cmake directory
+  * More tweaks to get nosetests working in python3
+  * Contributors: Paul Bovbel
+
+ -- Paul Bovbel <pbovbel@locusrobotics.com>  Thu, 23 Nov 2017 05:00:00 -0000
+
+ros-lunar-test-catkin-virtualenv (0.1.1-0xenial) xenial; urgency=high
+
+
+
+ -- Paul Bovbel <pbovbel@locusrobotics.com>  Wed, 22 Nov 2017 05:00:00 -0000
+
+ros-lunar-test-catkin-virtualenv (0.1.0-0xenial) xenial; urgency=high
+
+  * Fix trusty support
+  * Contributors: Paul Bovbel
+
+ -- Paul Bovbel <pbovbel@locusrobotics.com>  Wed, 22 Nov 2017 05:00:00 -0000
+
+ros-lunar-test-catkin-virtualenv (0.0.1-0xenial) xenial; urgency=high
+
+  * Add license
+  * Overhaul virtualenv generation and add Python 3 support (#1 <https://github.com/locusrobotics/catkin_virtualenv/issues/1>)
+    * Rewrite build_venv in python
+    * Use dh_virtualenv to do the heavy lifting; embed new version of dh_virtualenv internally
+    * Update CMake to generate virtualenv appropriately for install and devel space
+  * Initial implementation
+  * Contributors: Paul Bovbel
+
+ -- Paul Bovbel <pbovbel@locusrobotics.com>  Wed, 22 Nov 2017 05:00:00 -0000
+
+
