@@ -1,0 +1,12 @@
+Source: ros-lunar-test-catkin-virtualenv-py3
+Section: misc
+Priority: extra
+Maintainer: Paul Bovbel <pbovbel@locusrobotics.com>
+Build-Depends: debhelper (>= 9.0.0), python3-nose, ros-lunar-catkin, ros-lunar-catkin-virtualenv, ros-lunar-rostest
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-lunar-test-catkin-virtualenv-py3
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, 
+Description: Package to test catkin_virtualenv in Python 3.
