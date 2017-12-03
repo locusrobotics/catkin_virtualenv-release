@@ -1,3 +1,30 @@
+## catkin_virtualenv (kinetic) - 0.1.4-1
+
+The packages in the `catkin_virtualenv` repository were released into the `kinetic` distro by running `/usr/local/bin/bloom-release -r kinetic -t kinetic catkin_virtualenv` on `Sun, 03 Dec 2017 19:24:11 -0000`
+
+The `catkin_virtualenv` package was released.
+
+These packages were explicitly ignored:
+- `test_catkin_virtualenv`
+- `test_catkin_virtualenv_py3`
+
+Version of package(s) in repository `catkin_virtualenv`:
+
+- upstream repository: https://github.com/locusrobotics/catkin_virtualenv.git
+- release repository: https://github.com/locusrobotics/catkin_virtualenv-release.git
+- rosdistro version: `0.1.3-0`
+- old version: `0.1.4-0`
+- new version: `0.1.4-1`
+
+Versions of tools used:
+
+- bloom version: `0.6.1`
+- catkin_pkg version: `0.3.9`
+- rosdep version: `0.11.8`
+- rosdistro version: `0.6.2`
+- vcstools version: `0.1.39`
+
+
 ## catkin_virtualenv (indigo) - 0.1.4-0
 
 The packages in the `catkin_virtualenv` repository were released into the `indigo` distro by running `/usr/local/bin/bloom-release -r indigo -t indigo catkin_virtualenv` on `Sun, 03 Dec 2017 19:23:05 -0000`
