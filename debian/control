@@ -1,0 +1,12 @@
+Source: ros-lunar-catkin-virtualenv
+Section: misc
+Priority: extra
+Maintainer: Paul Bovbel <pbovbel@locusrobotics.com>
+Build-Depends: debhelper (>= 9.0.0), ros-lunar-catkin, ros-lunar-roslint
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-lunar-catkin-virtualenv
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-enum34, python-virtualenv, python3-dev
+Description: Bundle python requirements in a catkin package via virtualenv.
