@@ -2,6 +2,17 @@
 Changelog for package test_catkin_virtualenv
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.2.0 (2018-05-03)
+------------------
+
+0.1.6 (2018-01-10)
+------------------
+
+0.1.5 (2018-01-10)
+------------------
+* Drop strict requirements
+* Contributors: Paul Bovbel
+
 0.1.4 (2017-12-03)
 ------------------
 * Fix cmake lint errors
