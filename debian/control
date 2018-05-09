@@ -1,12 +1,12 @@
-Source: ros-kinetic-catkin-virtualenv
+Source: ros-hotdog-catkin-virtualenv
 Section: misc
 Priority: extra
 Maintainer: Paul Bovbel <pbovbel@locusrobotics.com>
-Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-roslint
+Build-Depends: debhelper (>= 9.0.0), ros-hotdog-catkin, ros-hotdog-roslint
 Homepage: 
 Standards-Version: 3.9.2
 
-Package: ros-kinetic-catkin-virtualenv
+Package: ros-hotdog-catkin-virtualenv
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python-enum34, python-virtualenv, python3-dev
 Description: Bundle python requirements in a catkin package via virtualenv.
