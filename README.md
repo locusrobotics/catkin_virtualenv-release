@@ -1,3 +1,29 @@
+## catkin_virtualenv (hotdog) - 0.2.1-0
+
+The packages in the `catkin_virtualenv` repository were released into the `hotdog` distro by running `/usr/local/bin/bloom-release -r hotdog catkin_virtualenv -y` on `Mon, 04 Jun 2018 17:31:38 -0000`
+
+These packages were released:
+- `catkin_virtualenv`
+- `test_catkin_virtualenv`
+- `test_catkin_virtualenv_py3`
+
+Version of package(s) in repository `catkin_virtualenv`:
+
+- upstream repository: https://github.com/locusrobotics/catkin_virtualenv.git
+- release repository: https://github.com/locusrobotics/catkin_virtualenv-release.git
+- rosdistro version: `0.2.0-0`
+- old version: `null`
+- new version: `0.2.1-0`
+
+Versions of tools used:
+
+- bloom version: `0.6.1.post3`
+- catkin_pkg version: `0.4.2`
+- rosdep version: `0.12.2`
+- rosdistro version: `0.6.8`
+- vcstools version: `0.1.40`
+
+
 ## catkin_virtualenv (melodic) - 0.2.0-0
 
 The packages in the `catkin_virtualenv` repository were released into the `melodic` distro by running `/usr/local/bin/bloom-release -r melodic -t melodic catkin_virtualenv` on `Fri, 04 May 2018 00:00:26 -0000`
