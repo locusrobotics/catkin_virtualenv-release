@@ -1,12 +1,12 @@
-Source: ros-hotdog-test-catkin-virtualenv-py3
+Source: ros-bismuth-test-catkin-virtualenv-py3
 Section: misc
 Priority: extra
 Maintainer: Paul Bovbel <pbovbel@locusrobotics.com>
-Build-Depends: debhelper (>= 9.0.0), python3-nose, ros-hotdog-catkin, ros-hotdog-catkin-virtualenv, ros-hotdog-rostest
+Build-Depends: debhelper (>= 9.0.0), python3-nose, ros-bismuth-catkin, ros-bismuth-catkin-virtualenv, ros-bismuth-rostest
 Homepage: 
 Standards-Version: 3.9.2
 
-Package: ros-hotdog-test-catkin-virtualenv-py3
+Package: ros-bismuth-test-catkin-virtualenv-py3
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, 
 Description: Package to test catkin_virtualenv in Python 3.
