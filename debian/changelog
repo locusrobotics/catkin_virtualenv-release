@@ -1,29 +1,29 @@
-ros-hotdog-test-catkin-virtualenv (0.2.1-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.2.1-0xenial) xenial; urgency=high
 
 
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Mon, 04 Jun 2018 04:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.2.0-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.2.0-0xenial) xenial; urgency=high
 
 
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Thu, 03 May 2018 04:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.1.6-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.1.6-0xenial) xenial; urgency=high
 
 
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Wed, 10 Jan 2018 05:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.1.5-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.1.5-0xenial) xenial; urgency=high
 
   * Drop strict requirements
   * Contributors: Paul Bovbel
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Wed, 10 Jan 2018 05:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.1.4-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.1.4-0xenial) xenial; urgency=high
 
   * Fix cmake lint errors
   * Add XML schema, README badges, fix travis config for debian jessie, and remove legacy scripts
@@ -34,13 +34,13 @@ ros-hotdog-test-catkin-virtualenv (0.1.4-0xenial) xenial; urgency=high
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Sun, 03 Dec 2017 05:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.1.3-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.1.3-0xenial) xenial; urgency=high
 
 
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Mon, 27 Nov 2017 05:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.1.2-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.1.2-0xenial) xenial; urgency=high
 
   * Drop rosbash dependency and move python scripts into cmake directory
   * More tweaks to get nosetests working in python3
@@ -48,20 +48,20 @@ ros-hotdog-test-catkin-virtualenv (0.1.2-0xenial) xenial; urgency=high
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Thu, 23 Nov 2017 05:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.1.1-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.1.1-0xenial) xenial; urgency=high
 
 
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Wed, 22 Nov 2017 05:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.1.0-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.1.0-0xenial) xenial; urgency=high
 
   * Fix trusty support
   * Contributors: Paul Bovbel
 
  -- Paul Bovbel <pbovbel@locusrobotics.com>  Wed, 22 Nov 2017 05:00:00 -0000
 
-ros-hotdog-test-catkin-virtualenv (0.0.1-0xenial) xenial; urgency=high
+ros-bismuth-test-catkin-virtualenv (0.0.1-0xenial) xenial; urgency=high
 
   * Add license
   * Overhaul virtualenv generation and add Python 3 support (#1 <https://github.com/locusrobotics/catkin_virtualenv/issues/1>)

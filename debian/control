@@ -1,12 +1,12 @@
-Source: ros-hotdog-test-catkin-virtualenv
+Source: ros-bismuth-test-catkin-virtualenv
 Section: misc
 Priority: extra
 Maintainer: Paul Bovbel <pbovbel@locusrobotics.com>
-Build-Depends: debhelper (>= 9.0.0), ros-hotdog-catkin, ros-hotdog-catkin-virtualenv, ros-hotdog-rostest
+Build-Depends: debhelper (>= 9.0.0), ros-bismuth-catkin, ros-bismuth-catkin-virtualenv, ros-bismuth-rostest
 Homepage: 
 Standards-Version: 3.9.2
 
-Package: ros-hotdog-test-catkin-virtualenv
+Package: ros-bismuth-test-catkin-virtualenv
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, 
 Description: Package to test catkin_virtualenv.
