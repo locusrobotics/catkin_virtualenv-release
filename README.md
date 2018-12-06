@@ -48,6 +48,9 @@ It's possible to bundle all of a catkin package's python requirements, as well a
 into a virtualenv. This process will also override the standard `catkin_install_python` macro to wrap a virtualenv
 loader around the specified python scripts.
 
+This operation does not do any dependency resolution - similar to how `pip` operates, the topmost dependency declaration
+'wins' (https://github.com/pypa/pip/issues/988).
+
 Add an build dependency to `package.xml`:
 
 ```
@@ -115,4 +118,9 @@ catkin_generate_virtualenv(
 
   # Disable including pip requirements from catkin dependencies of this package.
   ISOLATE_REQUIREMENTS TRUE  # Default FALSE
+
+  # Provide extra arguments to the underlying pip invocation
+  EXTRA_PIP_ARGS 
+    --no-binary=:all:
+    -vvv
 )
