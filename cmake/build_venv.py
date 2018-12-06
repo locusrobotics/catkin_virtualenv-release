@@ -50,6 +50,8 @@ if __name__ == '__main__':
         '--python-version', default=2, help="Build the virtualenv with which python major version.")
     parser.add_argument(
         '--use-system-packages', action="store_true", help="Use system site packages.")
+    parser.add_argument(
+        '--extra-pip-args', default='"-qq"', type=str, help="Extra pip args for install.")
 
     args, unknown = parser.parse_known_args()
 
@@ -66,10 +68,10 @@ if __name__ == '__main__':
         package=os.path.basename(root_dir),
         requirements_filename=args.requirements,
         upgrade_pip=True,
-        pip_version="9.0.3",
+        pip_version="10.0.1",
         use_system_packages=args.use_system_packages,
         python=python_executable,
-        extra_pip_arg=['-qq'],
+        extra_pip_arg=args.extra_pip_args[1:-1].split(' '),
         log_file=None,
         # TODO(pbovbel) Builtin venv (python3-venv) is not available on trusty. This flag can be re-enabled when
         # trusty support is dropped.
