@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(test_catkin_virtualenv_py3)
+project(test_catkin_virtualenv_inherited)
 
 find_package(catkin REQUIRED COMPONENTS catkin_virtualenv)
 
 catkin_package()
 
-catkin_generate_virtualenv(
-  PYTHON_VERSION_MAJOR 3
-)
+catkin_generate_virtualenv()
 
 install(FILES requirements.txt
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
@@ -24,9 +22,8 @@ if(CATKIN_ENABLE_TESTING)
     DEPENDENCIES ${PROJECT_NAME}_generate_virtualenv
   )
 
-  # TODO(pbovbel): investigate rostest failure under python3
-  # add_rostest(test/virtualenv_script.test
-  #   DEPENDENCIES ${PROJECT_NAME}_generate_virtualenv
-  # )
+  add_rostest(test/virtualenv_script.test
+    DEPENDENCIES ${PROJECT_NAME}_generate_virtualenv
+  )
 
 endif()
