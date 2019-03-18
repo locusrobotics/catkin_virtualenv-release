@@ -2,6 +2,36 @@
 Changelog for package catkin_virtualenv
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.4.0 (2019-03-18)
+------------------
+* Pin pip to known-working version (`#38 <https://github.com/locusrobotics/catkin_virtualenv/issues/38>`_)
+* Fix python3 isolated builds (`#37 <https://github.com/locusrobotics/catkin_virtualenv/issues/37>`_)
+  - Pull in an upstream fix to deal with new shebang styles
+  - add a new test for isolated py3 virtualenvs
+  - switch to using an internal pip module
+* venv module doesn't support no-site-packages arg
+* Pass arguments to internal venv module if specified (`#36 <https://github.com/locusrobotics/catkin_virtualenv/issues/36>`_)
+* Add missing dependency
+* Contributors: Paul Bovbel
+
+0.3.0 (2019-01-16)
+------------------
+* Add retry to virtualenv creation (`#34 <https://github.com/locusrobotics/catkin_virtualenv/issues/34>`_)
+  * Echo check_call to stderr
+  * Fixup bug from `#33 <https://github.com/locusrobotics/catkin_virtualenv/issues/33>`_
+  * Add retry to virtualenv generation
+  * Add debug line for virtualenv
+  * Don't error on cleanup
+  * Fixup debug line
+  * Remove debug lines
+* Python3 re-enable, add PYTHON_VERSION support (`#33 <https://github.com/locusrobotics/catkin_virtualenv/issues/33>`_)
+  * replace PYTHON_VERSION_MAJOR with PYTHON_VERSION
+  * Simplify nose usage for python3
+  * Check for venv module directly rather than munging major version
+* Remove trailing whitespace
+* Add missing dependencies
+* Contributors: Paul Bovbel
+
 0.2.2 (2018-12-04)
 ------------------
 * Merge repeated requirements (`#32 <https://github.com/locusrobotics/catkin_virtualenv/issues/32>`_)
