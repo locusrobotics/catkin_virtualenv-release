@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
 <package format="2">
   <name>catkin_virtualenv</name>
-  <version>0.2.2</version>
+  <version>0.4.0</version>
   <description>Bundle python requirements in a catkin package via virtualenv.</description>
 
   <maintainer email="pbovbel@locusrobotics.com">Paul Bovbel</maintainer>
@@ -35,6 +35,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
   <build_export_depend>python-packaging</build_export_depend>
   <build_export_depend>python-virtualenv</build_export_depend>
   <build_export_depend>python3-dev</build_export_depend>
+  <build_export_depend>python3-venv</build_export_depend>
+  <build_export_depend>rosbash</build_export_depend>
+  <build_export_depend>virtualenv</build_export_depend>
 
   <test_depend>roslint</test_depend>
 
