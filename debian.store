@@ -1,1 +1,1 @@
-{"base": "2c7528c", "parent": "debian/kinetic/catkin_virtualenv", "previous": "b4661b1", "trim": "", "trimbase": ""}
+{"trim": "", "base": "37ef903", "trimbase": "", "parent": "debian/kinetic/catkin_virtualenv", "previous": "2a5ccda"}
