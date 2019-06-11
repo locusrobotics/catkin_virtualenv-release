@@ -18,6 +18,8 @@
 # <http://www.gnu.org/licenses/>.
 
 # Note for catkin_virtualenv users: local changes from upstream are marked with (pbovbel)
+from __future__ import print_function
+
 
 import os
 import re
@@ -31,6 +33,12 @@ PYTHON_INTERPRETERS = ['python', 'pypy', 'ipy', 'jython']
 _PYTHON_INTERPRETERS_REGEX = r'\(' + r'\|'.join(PYTHON_INTERPRETERS) + r'\)'
 
 
+# (pbovbel) Log subprocess calls
+def check_call(cmd, *args, **kwargs):
+    print(' '.join(cmd))
+    return subprocess.check_call(cmd, *args, **kwargs)
+
+
 class Deployment(object):
     def __init__(self,
                  package,
@@ -42,6 +50,7 @@ class Deployment(object):
                  setuptools=False,
                  python=None,
                  builtin_venv=False,
+                 builtin_pip=False,
                  sourcedirectory=None,
                  verbose=False,
                  extra_pip_arg=[],
@@ -90,8 +99,12 @@ class Deployment(object):
         # executable. Otherwise it would just blow up due to too long
         # shebang-line.
         python = self.venv_bin('python')
-        self.pip_preinstall_prefix = [python, self.venv_bin('pip')]
-        self.pip_prefix = [python, self.venv_bin(pip_tool)]
+        if builtin_pip:
+            self.pip_preinstall_prefix = [python, '-m', 'pip']
+            self.pip_prefix = [python, '-m', pip_tool]
+        else:
+            self.pip_preinstall_prefix = [python, self.venv_bin('pip')]
+            self.pip_prefix = [python, self.venv_bin(pip_tool)]
         self.pip_args = ['install']
 
         if self.verbose:
@@ -129,6 +142,7 @@ class Deployment(object):
                    setuptools=options.setuptools,
                    python=options.python,
                    builtin_venv=options.builtin_venv,
+                   builtin_pip=options.builtin_pip,
                    sourcedirectory=options.sourcedirectory,
                    verbose=verbose,
                    extra_pip_arg=options.extra_pip_arg,
@@ -144,29 +158,33 @@ class Deployment(object):
     def create_virtualenv(self):
         if self.builtin_venv:
             virtualenv = [self.python, '-m', 'venv']
+
+            if self.use_system_packages:
+                virtualenv.append('--system-site-packages')
+
         else:
             virtualenv = ['virtualenv']
+
+            if self.python:
+                virtualenv.extend(('--python', self.python))
 
             if self.use_system_packages:
                 virtualenv.append('--system-site-packages')
             else:
                 virtualenv.append('--no-site-packages')
 
-            if self.setuptools:
-                virtualenv.append('--setuptools')
+        if self.setuptools:
+            virtualenv.append('--setuptools')
 
-            if self.verbose:
-                virtualenv.append('--verbose')
+        if self.verbose:
+            virtualenv.append('--verbose')
 
-            if self.python:
-                virtualenv.extend(('--python', self.python))
-
-            # Add in any user supplied pip args
-            if self.extra_virtualenv_arg:
-                virtualenv.extend(self.extra_virtualenv_arg)
+        # Add in any user supplied pip args
+        if self.extra_virtualenv_arg:
+            virtualenv.extend(self.extra_virtualenv_arg)
 
         virtualenv.append(self.package_dir)
-        subprocess.check_call(virtualenv)
+        check_call(virtualenv)
 
     def venv_bin(self, binary_name):
         return os.path.abspath(os.path.join(self.bin_dir, binary_name))
@@ -187,28 +205,29 @@ class Deployment(object):
             pip_package = 'pip==' + self.pip_version if self.pip_version else 'pip'
             # First, bootstrap pip with a reduced option set (well-supported options)
             print(self.pip_preinstall_prefix + self.pip_upgrade_args + ['-U', pip_package])
-            subprocess.check_call(self.pip_preinstall_prefix + self.pip_upgrade_args + ['-U', pip_package])
+            check_call(self.pip_preinstall_prefix + self.pip_upgrade_args + ['-U', pip_package])
         if self.preinstall:
-            subprocess.check_call(self.pip_preinstall(*self.preinstall))
+            check_call(self.pip_preinstall(*self.preinstall))
 
         requirements_path = os.path.join(self.sourcedirectory, self.requirements_filename)
         if os.path.exists(requirements_path):
-            subprocess.check_call(self.pip('-r', requirements_path))
+            check_call(self.pip('-r', requirements_path))
 
     def run_tests(self):
         python = self.venv_bin('python')
         setup_py = os.path.join(self.sourcedirectory, 'setup.py')
         if os.path.exists(setup_py):
-            subprocess.check_call([python, 'setup.py', 'test'], cwd=self.sourcedirectory)
+            check_call([python, 'setup.py', 'test'], cwd=self.sourcedirectory)
 
     def find_script_files(self):
         """Find list of files containing python shebangs in the bin directory"""
-        command = ['grep', '-l', '-r', '-e',
-                   r'^#!.*bin/\(env \)\?{0}'.format(_PYTHON_INTERPRETERS_REGEX),
+        command = ['grep', '-l', '-r',
+                   '-e', r'^#!.*bin/\(env \)\?{0}'.format(_PYTHON_INTERPRETERS_REGEX),
+                   '-e', r"^'''exec.*bin/{0}".format(_PYTHON_INTERPRETERS_REGEX),
                    self.bin_dir]
         grep_proc = subprocess.Popen(command, stdout=subprocess.PIPE)
         files, stderr = grep_proc.communicate()
-        return files.decode('utf-8').strip().split('\n')
+        return set(f for f in files.decode('utf-8').strip().split('\n') if f)
 
     def fix_shebangs(self):
         """Translate /usr/bin/python and /usr/bin/env python shebang
@@ -216,9 +235,11 @@ class Deployment(object):
         """
         pythonpath = os.path.join(self.virtualenv_install_dir, 'bin/python')
         for f in self.find_script_files():
-            regex = r's-^#!.*bin/\(env \)\?{names}\"\?-#!{pythonpath}-'\
-                .format(names=_PYTHON_INTERPRETERS_REGEX, pythonpath=re.escape(pythonpath))
-            subprocess.check_call(['sed', '-i', regex, f])
+            regex = (
+                r's-^#!.*bin/\(env \)\?{names}\"\?-#!{pythonpath}-;'
+                r"s-^'''exec'.*bin/{names}-'''exec' {pythonpath}-"
+            ).format(names=_PYTHON_INTERPRETERS_REGEX, pythonpath=re.escape(pythonpath))
+            check_call(['sed', '-i', regex, f])
 
     def fix_activate_path(self):
         """Replace the `VIRTUAL_ENV` path in bin/activate to reflect the
@@ -255,7 +276,7 @@ class Deployment(object):
 
     def install_package(self):
         if not self.skip_install:
-            subprocess.check_call(self.pip('.'), cwd=os.path.abspath(self.sourcedirectory))
+            check_call(self.pip('.'), cwd=os.path.abspath(self.sourcedirectory))
 
     def fix_local_symlinks(self):
         # The virtualenv might end up with a local folder that points outside the package
