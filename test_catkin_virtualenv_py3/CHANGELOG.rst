@@ -2,6 +2,30 @@
 Changelog for package test_catkin_virtualenv_py3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.4.1 (2019-06-11)
+------------------
+
+0.4.0 (2019-03-18)
+------------------
+
+0.3.0 (2019-01-16)
+------------------
+* Python3 re-enable, add PYTHON_VERSION support (`#33 <https://github.com/locusrobotics/catkin_virtualenv/issues/33>`_)
+  * replace PYTHON_VERSION_MAJOR with PYTHON_VERSION
+  * Simplify nose usage for python3
+  * Check for venv module directly rather than munging major version
+* Contributors: Paul Bovbel
+
+0.2.2 (2018-12-04)
+------------------
+* Merge repeated requirements (`#32 <https://github.com/locusrobotics/catkin_virtualenv/issues/32>`_)
+* Merge pull request `#31 <https://github.com/locusrobotics/catkin_virtualenv/issues/31>`_ from locusrobotics/add-extra-pip-args
+  Clean up extra_pip_args PR
+* Contributors: Paul Bovbel, Shingo Kitagawa
+
+0.2.1 (2018-06-04)
+------------------
+
 0.2.0 (2018-05-03)
 ------------------
 * Merge pull request `#16 <https://github.com/locusrobotics/catkin_virtualenv/issues/16>`_ from locusrobotics/system-site-packages
