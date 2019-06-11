@@ -1,3 +1,32 @@
+## catkin_virtualenv (melodic) - 0.4.1-1
+
+The packages in the `catkin_virtualenv` repository were released into the `melodic` distro by running `/usr/bin/bloom-release -r melodic -t melodic catkin_virtualenv` on `Tue, 11 Jun 2019 20:51:53 -0000`
+
+The `catkin_virtualenv` package was released.
+
+These packages were explicitly ignored:
+- `test_catkin_virtualenv`
+- `test_catkin_virtualenv_inherited`
+- `test_catkin_virtualenv_py3`
+- `test_catkin_virtualenv_py3_isolated`
+
+Version of package(s) in repository `catkin_virtualenv`:
+
+- upstream repository: https://github.com/locusrobotics/catkin_virtualenv.git
+- release repository: https://github.com/locusrobotics/catkin_virtualenv-release.git
+- rosdistro version: `0.4.0-0`
+- old version: `0.4.0-0`
+- new version: `0.4.1-1`
+
+Versions of tools used:
+
+- bloom version: `0.8.0`
+- catkin_pkg version: `0.4.12`
+- rosdep version: `0.15.1`
+- rosdistro version: `0.7.4`
+- vcstools version: `0.1.40`
+
+
 ## catkin_virtualenv (melodic) - 0.4.0-0
 
 The packages in the `catkin_virtualenv` repository were released into the `melodic` distro by running `/usr/bin/bloom-release catkin_virtualenv -r melodic -t melodic` on `Mon, 18 Mar 2019 17:43:12 -0000`
