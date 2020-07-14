@@ -1,0 +1,4 @@
+test_catkin_virtualenv
+test_catkin_virtualenv_inherited
+test_catkin_virtualenv_py3
+test_catkin_virtualenv_py3_isolated
