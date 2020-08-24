@@ -21,7 +21,6 @@ import unittest
 
 
 class TestVirtualenv(unittest.TestCase):
-
     def test_import(self):
-        requests = importlib.import_module("requests")
-        self.assertEquals(requests.__version__, "2.20.1")
+        with self.assertRaises(ImportError):
+            _ = importlib.import_module("requests")
