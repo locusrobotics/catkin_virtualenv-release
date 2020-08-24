@@ -2,19 +2,74 @@
 Changelog for package catkin_virtualenv
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.5.2 (2020-02-05)
+0.6.1 (2020-08-24)
 ------------------
-* First python2 issue of 2020 (#49)
+* Correct dependencies and autoformat (`#72 <https://github.com/locusrobotics/catkin_virtualenv/issues/72>`_)
+  * Remove python-virtualenv dep
+  * Add python2-dev
+  * Lint
+* We're ok with any 44.x version of setuptools (`#71 <https://github.com/locusrobotics/catkin_virtualenv/issues/71>`_)
+  But not anything newer.
+  Older versions don't appear to work reliably with `pip==20.1`.
+  This helps when running a build of a package depending on catkin_virtualenv on OS which ship with an old version of setuptools (such as Ubuntu Xenial) when `USE_SYSTEM_PACKAGES` is not set to `FALSE`. In that situation, only specifying 'setuptools<45` will be true, as setuptools is installed (in the systems site packages), so pip will not upgrade it. Specifying a minimum version like this will force pip to always install an up-to-date version.
+* Contributors: G.A. vd. Hoorn, Paul Bovbel
+
+0.6.0 (2020-07-14)
+------------------
+* Don't require catkin_package to be called before catkin_generate_virtualenv (`#67 <https://github.com/locusrobotics/catkin_virtualenv/issues/67>`_)
+* Revert "Downgrade docutils so that boto works (`#66 <https://github.com/locusrobotics/catkin_virtualenv/issues/66>`_)"
+  This reverts commit 998cd6add2e43e12036d0db15a7c4d58fe3411cf.
+* Downgrade docutils so that boto works (`#66 <https://github.com/locusrobotics/catkin_virtualenv/issues/66>`_)
+  See https://github.com/boto/botocore/issues/1942 and related threads.
+* Make regex for Python bytecode more selective (`#65 <https://github.com/locusrobotics/catkin_virtualenv/issues/65>`_)
+  Fix regex to match only files ending in ".py[co]" and not files ending
+  in "py[co]".
+* Remove user specific paths (`#63 <https://github.com/locusrobotics/catkin_virtualenv/issues/63>`_)
+  * Remove user specific paths
+  * Change working directory of venv_lock command
+  * Lock catkin_virtualenv base requirements
+  Co-authored-by: Paul Bovbel <paul@bovbel.com>
+* RST-3172 Check that requirements file is locked (`#62 <https://github.com/locusrobotics/catkin_virtualenv/issues/62>`_)
+* Two helpful hints (`#61 <https://github.com/locusrobotics/catkin_virtualenv/issues/61>`_)
+* Fix input requirements warning (`#58 <https://github.com/locusrobotics/catkin_virtualenv/issues/58>`_)
+  * Only warn about INPUT_REQUIREMENTS if a package exports requirements to begin with
+  * Update catkin_virtualenv/cmake/catkin_generate_virtualenv.cmake
+  Co-authored-by: Andrew Blakey <ablakey@gmail.com>
+  Co-authored-by: Andrew Blakey <ablakey@gmail.com>
+* Preserve symlinks during copy (`#57 <https://github.com/locusrobotics/catkin_virtualenv/issues/57>`_)
+* Don't ignore unknown args
+* RST-3172 Refactor catkin_virtualenv to allow locking dependencies (`#55 <https://github.com/locusrobotics/catkin_virtualenv/issues/55>`_)
+  * Remove unused options
+  * Fix regex for comments
+  * Migrate scripts
+  * Remove old code
+  * Move common requirements to an export file
+  * Minor cleanup
+  * Remove requirement-parsing unit tests
+  * Fix logging config
+  * Fix test builds
+  * Generate lock files
+  * Fix tests
+  * Move dh-virtualenv functions into separate file
+  * Fix roslint
+  * Update docs
+  * Update requirements
+  * CMake comments
+  * Fix pip-args
+  * README fixup
+  * Correct ARG_LOCK_FILE handling
+  * Remove headers
+  * Use set comprehension
+  * Add migration doc
+  * Respin
+* Use exec to dive into python (`#51 <https://github.com/locusrobotics/catkin_virtualenv/issues/51>`_)
+* First python2 issue of 2020 (`#49 <https://github.com/locusrobotics/catkin_virtualenv/issues/49>`_)
   * Clean up options, virtualenv installs setuptools by default
   * Make sure we install a compatible setuptools version for py2 venv
-* Contributors: Paul Bovbel
-
-0.5.1 (2019-08-19)
-------------------
 * catkin-pkg-modules has disappeared off pypi (`#46 <https://github.com/locusrobotics/catkin_virtualenv/issues/46>`_)
   * catkin-pkg-modules has disappeared off pypi, but catkin-pkg is still there
   * Version all requirements
-* Contributors: Paul Bovbel
+* Contributors: David V. Lu!!, Michael Johnson, Paul Bovbel, abencz
 
 0.5.0 (2019-06-21)
 ------------------

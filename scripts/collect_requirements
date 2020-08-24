@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 # Software License Agreement (GPL)
 #
-# \file      setup.py
+# \file      collect_requirements
 # \authors   Paul Bovbel <pbovbel@locusrobotics.com>
 # \copyright Copyright (c) (2017,), Locus Robotics, All rights reserved.
 #
@@ -16,9 +17,26 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-from distutils.core import setup
-from catkin_pkg.python_setup import generate_distutils_setup
 
-d = generate_distutils_setup(packages=["catkin_virtualenv"], package_dir={"": "src"})
+import argparse
 
-setup(**d)
+from catkin_virtualenv import configure_logging, collect_requirements
+
+
+if __name__ == '__main__':
+    configure_logging()
+
+    parser = argparse.ArgumentParser(description=collect_requirements.collect_requirements.__doc__)
+    parser.add_argument(
+        'package_name', help="Package name that virtualenv belongs to.")
+    parser.add_argument(
+        '--no-deps', action="store_true", help="Only collect requirements for top-level package.")
+
+    args, unknown = parser.parse_known_args()
+
+    requirements = collect_requirements.collect_requirements(
+        package_name=args.package_name,
+        no_deps=args.no_deps,
+    )
+
+    print(';'.join(requirements))
