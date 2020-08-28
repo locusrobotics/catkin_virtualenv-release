@@ -1,3 +1,32 @@
+## catkin_virtualenv (noetic) - 0.6.1-2
+
+The packages in the `catkin_virtualenv` repository were released into the `noetic` distro by running `/usr/bin/bloom-release -r noetic -t noetic catkin_virtualenv -y` on `Fri, 28 Aug 2020 14:57:02 -0000`
+
+The `catkin_virtualenv` package was released.
+
+These packages were explicitly ignored:
+- `test_catkin_virtualenv`
+- `test_catkin_virtualenv_inherited`
+- `test_catkin_virtualenv_py3`
+- `test_catkin_virtualenv_py3_isolated`
+
+Version of package(s) in repository `catkin_virtualenv`:
+
+- upstream repository: https://github.com/locusrobotics/catkin_virtualenv.git
+- release repository: https://github.com/locusrobotics/catkin_virtualenv-release.git
+- rosdistro version: `0.6.1-1`
+- old version: `0.6.1-1`
+- new version: `0.6.1-2`
+
+Versions of tools used:
+
+- bloom version: `0.9.8`
+- catkin_pkg version: `0.4.22`
+- rosdep version: `0.19.0`
+- rosdistro version: `0.8.2`
+- vcstools version: `0.1.42`
+
+
 ## catkin_virtualenv (kinetic) - 0.6.1-1
 
 The packages in the `catkin_virtualenv` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release -r kinetic -t kinetic catkin_virtualenv --edit` on `Mon, 24 Aug 2020 21:15:40 -0000`
