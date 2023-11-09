@@ -1,0 +1,18 @@
+repo_name: locusrobotics/catkin_virtualenv-release
+report_id: f14ff8130586914cbc4a9ee89fca25ed
+repo_type: Public
+timestamp: '2023-11-09T16:24:09+00:00'
+requested_by: paulbovbel
+provider: github
+branch: master
+detected_tools_count: 1
+tools:
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source: Repo Metadata
