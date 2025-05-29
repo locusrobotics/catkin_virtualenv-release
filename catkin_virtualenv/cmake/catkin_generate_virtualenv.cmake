@@ -29,7 +29,7 @@ function(catkin_generate_virtualenv)
   endif()
 
   if(NOT DEFINED ARG_PYTHON_INTERPRETER)
-    set(ARG_PYTHON_INTERPRETER "python2")
+    set(ARG_PYTHON_INTERPRETER "python3")
   endif()
 
   if(NOT DEFINED ARG_USE_SYSTEM_PACKAGES OR ARG_USE_SYSTEM_PACKAGES)
@@ -104,10 +104,10 @@ function(catkin_generate_virtualenv)
       COMMAND ${CATKIN_ENV} rosrun catkin_virtualenv venv_lock ${CMAKE_BINARY_DIR}/${venv_dir}
         --package-name ${PROJECT_NAME} --input-requirements ${ARG_INPUT_REQUIREMENTS}
         --no-overwrite --extra-pip-args ${processed_pip_args}
-      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
       DEPENDS
         ${CMAKE_BINARY_DIR}/${venv_dir}/bin/python
-        ${CMAKE_SOURCE_DIR}/${ARG_INPUT_REQUIREMENTS}
+        ${PROJECT_SOURCE_DIR}/${ARG_INPUT_REQUIREMENTS}
     )
   endif()
 
@@ -141,18 +141,18 @@ function(catkin_generate_virtualenv)
       install/${venv_dir}
   )
 
-  add_custom_target(venv_lock
+  add_custom_target(${PROJECT_NAME}_venv_lock
     COMMENT "Manually invoked target to generate the lock file on demand"
     COMMAND ${CATKIN_ENV} rosrun catkin_virtualenv venv_lock ${CMAKE_BINARY_DIR}/${venv_dir}
       --package-name ${PROJECT_NAME} --input-requirements ${ARG_INPUT_REQUIREMENTS}
       --extra-pip-args ${processed_pip_args}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     DEPENDS
       ${venv_devel_dir}
-      ${CMAKE_SOURCE_DIR}/${ARG_INPUT_REQUIREMENTS}
+      ${PROJECT_SOURCE_DIR}/${ARG_INPUT_REQUIREMENTS}
   )
 
-  if(NOT package_requirements STREQUAL "" AND (NOT DEFINED ARG_CHECK_VENV OR ARG_CHECK_VENV))
+  if(CATKIN_ENABLE_TESTING AND NOT package_requirements STREQUAL "" AND (NOT DEFINED ARG_CHECK_VENV OR ARG_CHECK_VENV))
     file(MAKE_DIRECTORY ${CATKIN_TEST_RESULTS_DIR}/${PROJECT_NAME})
     catkin_run_tests_target("venv_check" "${PROJECT_NAME}-requirements" "venv_check-${PROJECT_NAME}-requirements.xml"
       COMMAND "${CATKIN_ENV} rosrun catkin_virtualenv venv_check ${venv_dir} --requirements ${package_requirements} \

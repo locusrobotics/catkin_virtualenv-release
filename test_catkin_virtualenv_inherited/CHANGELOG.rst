@@ -2,6 +2,111 @@
 Changelog for package test_catkin_virtualenv_inherited
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.8.0 (2022-02-23)
+------------------
+
+0.9.0 (2023-02-22)
+------------------
+* 0.8.0
+* Update changelogs
+* Contributors: Gary Servin
+
+0.10.0 (2023-09-25)
+-------------------
+* Drop python2 and add Jammy support (#101)
+  * Updating pip and pip-tools
+  * Trying older version of pip and pip-tools
+  * Using slightly newer version of pip and piptools
+  * Ensuring we are using python3
+  * fix typo
+  * Updating catkin-pkg for Jammy support
+  * Remove test_virtualenv_python2
+  * Update requirements to fix build error
+  * Remove python3 direct reference from venv
+  * Update pip and pip-tools for 3.7+ compatibility
+  * Don't enumerate python versions
+  * Add compatibility notes
+  * Remove melodic test and python2 references
+  * Fix build error more
+  * Get rid of requests as a package for testing
+  * get_pip isn't versioned 3.6 onwards
+  * Fixup double pip-tools
+  * Revert "Get rid of requests as a package for testing"
+  This reverts commit 55e5b5889d1080303c52fb4e6671d5061498ac57.
+  * Try fix action
+  * Disable isolated tests
+  * Revert changes to match the dependencies
+  ---------
+  Co-authored-by: Kalpesh Lad <klad@locusrobotics.com>
+  Co-authored-by: Gary Servin <gservin@locusrobotics.com>
+* 0.9.0
+* Update changelogs
+* 0.8.0
+* Update changelogs
+* Revert "Update changelogs"
+  This reverts commit 33618e7dec29a058931e5e7190456b4418140c78.
+* Update changelogs
+* Contributors: Gary Servin, Paul Bovbel
+
+0.15.1 (2025-05-29)
+-------------------
+
+0.15.0 (2025-05-29)
+-------------------
+* [ROS-O] Update dependencies version to support testing on Ubuntu noble / ROS-O (`#115 <https://github.com/locusrobotics/catkin_virtualenv/issues/115>`_)
+* Contributors: Yuki Furuta
+
+0.14.0 (2025-02-04)
+-------------------
+
+0.13.0 (2024-09-16)
+-------------------
+
+0.12.0 (2024-06-17)
+-------------------
+
+0.11.0 (2024-02-02)
+-------------------
+* 0.10.0
+* Update changelogs
+* Drop python2 and add Jammy support (#101)
+  * Updating pip and pip-tools
+  * Trying older version of pip and pip-tools
+  * Using slightly newer version of pip and piptools
+  * Ensuring we are using python3
+  * fix typo
+  * Updating catkin-pkg for Jammy support
+  * Remove test_virtualenv_python2
+  * Update requirements to fix build error
+  * Remove python3 direct reference from venv
+  * Update pip and pip-tools for 3.7+ compatibility
+  * Don't enumerate python versions
+  * Add compatibility notes
+  * Remove melodic test and python2 references
+  * Fix build error more
+  * Get rid of requests as a package for testing
+  * get_pip isn't versioned 3.6 onwards
+  * Fixup double pip-tools
+  * Revert "Get rid of requests as a package for testing"
+  This reverts commit 55e5b5889d1080303c52fb4e6671d5061498ac57.
+  * Try fix action
+  * Disable isolated tests
+  * Revert changes to match the dependencies
+  ---------
+  Co-authored-by: Kalpesh Lad <klad@locusrobotics.com>
+  Co-authored-by: Gary Servin <gservin@locusrobotics.com>
+* 0.9.0
+* Update changelogs
+* 0.8.0
+* Update changelogs
+* Revert "Update changelogs"
+  This reverts commit 33618e7dec29a058931e5e7190456b4418140c78.
+* Update changelogs
+* Contributors: Gary Servin, Paul Bovbel
+
+0.7.0 (2020-10-02)
+------------------
+
 0.6.1 (2020-08-24)
 ------------------
 * Correct dependencies and autoformat (`#72 <https://github.com/locusrobotics/catkin_virtualenv/issues/72>`_)

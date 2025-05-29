@@ -27,6 +27,12 @@ import shutil
 import subprocess
 import tempfile
 
+try:
+    from urllib.request import urlretrieve
+except ImportError:
+    # for python2
+    from urllib import urlretrieve
+
 from distutils.spawn import find_executable
 
 from . import run_command, relocate
@@ -40,11 +46,11 @@ logger = logging.getLogger(__name__)
 
 class Virtualenv:
     def __init__(self, path):
-        """ Manage a virtualenv at the specified path. """
+        """Manage a virtualenv at the specified path."""
         self.path = path
 
     def initialize(self, python, use_system_packages, extra_pip_args, clean=True):
-        """ Initialize a new virtualenv using the specified python version and extra arguments. """
+        """Initialize a new virtualenv using the specified python version and extra arguments."""
         if clean:
             try:
                 shutil.rmtree(self.path)
@@ -60,8 +66,8 @@ class Virtualenv:
             raise RuntimeError(error_msg)
 
         preinstall = [
-            "pip==20.1",
-            "pip-tools==5.1.2",
+            "pip==24.0",
+            "pip-tools==7.4.1",
         ]
 
         builtin_venv = self._check_module(system_python, "venv")
@@ -76,24 +82,47 @@ class Virtualenv:
         if use_system_packages:
             virtualenv.append("--system-site-packages")
 
+        without_pip = self._check_module(system_python, "ensurepip") is False
+        if without_pip:
+            virtualenv.append("--without-pip")
+
         virtualenv.append(self.path)
         run_command(virtualenv, check=True)
 
-        run_command([self._venv_bin("python"), "-m", "pip", "install"] + extra_pip_args + preinstall, check=True)
+        if without_pip:
+            # install pip via get-pip.py
+            version_proc = run_command(
+                ["python", "-cimport sys; print('{}.{}'.format(*sys.version_info))"], capture_output=True
+            )
+            version = version_proc.stdout
+            if isinstance(version, bytes):
+                version = version.decode("utf-8")
+            version = version.strip()
+            # download pip from https://bootstrap.pypa.io/pip/
+            get_pip_path, _ = urlretrieve("https://bootstrap.pypa.io/pip/get-pip.py")
+            run_command([self._venv_bin("python"), get_pip_path], check=True)
+
+        # (gservin): test --no-cache-dir
+        run_command(
+            [self._venv_bin("python"), "-m", "pip", "install", "--no-cache-dir", "-vvv"] + extra_pip_args + preinstall,
+            check=True,
+        )
 
     def install(self, requirements, extra_pip_args):
-        """ Sync a virtualenv with the specified requirements. """
-        command = [self._venv_bin("python"), "-m", "pip", "install"] + extra_pip_args
+        """Purge the cache first before installing."""  # (KLAD) testing to debug an issue on build farm
+        command = [self._venv_bin("python"), "-m", "pip", "cache", "purge"]
+        """ Sync a virtualenv with the specified requirements."""  # (KLAD) testing no-cache-dir
+        command = [self._venv_bin("python"), "-m", "pip", "install", "-vvv", "--no-cache-dir"] + extra_pip_args
         for req in requirements:
             run_command(command + ["-r", req], check=True)
 
     def check(self, requirements, extra_pip_args):
-        """ Check if a set of requirements is completely locked. """
+        """Check if a set of requirements is completely locked."""
         with open(requirements, "r") as f:
             existing_requirements = f.read()
 
         # Re-lock the requirements
-        command = [self._venv_bin("pip-compile"), "--no-header", requirements, "-o", "-"]
+        command = [self._find_pip_compile(), "--no-header", "--annotation-style", "line", requirements, "-o", "-"]
         if extra_pip_args:
             command += ["--pip-args", " ".join(extra_pip_args)]
 
@@ -106,6 +135,8 @@ class Virtualenv:
             content = content.lower()
             # Split into lines for diff
             content = content.splitlines()
+            # ignore order
+            content.sort()
             return content
 
         # Compare against existing requirements
@@ -114,7 +145,7 @@ class Virtualenv:
         return diff
 
     def lock(self, package_name, input_requirements, no_overwrite, extra_pip_args):
-        """ Create a frozen requirement set from a set of input specifications. """
+        """Create a frozen requirement set from a set of input specifications."""
         try:
             output_requirements = collect_requirements(package_name, no_deps=True)[0]
         except IndexError:
@@ -125,8 +156,8 @@ class Virtualenv:
             logger.info("Lock file already exists, not overwriting")
             return
 
-        pip_compile = self._venv_bin("pip-compile")
-        command = [pip_compile, "--no-header", input_requirements]
+        pip_compile = self._find_pip_compile()
+        command = [pip_compile, "--no-header", "--annotation-style", "line", input_requirements]
 
         if os.path.normpath(input_requirements) == os.path.normpath(output_requirements):
             raise RuntimeError(
@@ -145,7 +176,7 @@ class Virtualenv:
         logger.info("Wrote new lock file to {}".format(output_requirements))
 
     def relocate(self, target_dir):
-        """ Relocate a virtualenv to another directory. """
+        """Relocate a virtualenv to another directory."""
         self._delete_bytecode()
         relocate.fix_shebangs(self.path, target_dir)
         relocate.fix_activate_path(self.path, target_dir)
@@ -157,7 +188,20 @@ class Virtualenv:
             shutil.rmtree(local_dir)
 
     def _venv_bin(self, binary_name):
-        return os.path.abspath(os.path.join(self.path, "bin", binary_name))
+        if os.path.exists(os.path.join(self.path, "bin", binary_name)):
+            return os.path.abspath(os.path.join(self.path, "bin", binary_name))
+        elif os.path.exists(os.path.join(self.path, "local", "bin", binary_name)):
+            return os.path.abspath(os.path.join(self.path, "local", "bin", binary_name))
+        raise RuntimeError("Binary {} not found in venv".format(binary_name))
+
+    def _find_pip_compile(self):
+        try:
+            return self._venv_bin("pip-compile")
+        except RuntimeError as exc:
+            global_pip_compile = shutil.which("pip-compile")
+            if global_pip_compile is None:
+                raise RuntimeError("pip-compile not found found in Venv or global PATH") from exc
+            return global_pip_compile
 
     def _check_module(self, python_executable, module):
         try:
@@ -169,7 +213,7 @@ class Virtualenv:
             return False
 
     def _delete_bytecode(self):
-        """ Remove all .py[co] files since they embed absolute paths. """
+        """Remove all .py[co] files since they embed absolute paths."""
         for root, _, files in os.walk(self.path):
             for f in files:
                 if _BYTECODE_REGEX.match(f):

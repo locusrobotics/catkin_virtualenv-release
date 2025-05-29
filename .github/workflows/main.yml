@@ -6,15 +6,20 @@ on:
       - '*'
 
 jobs:
-  industrial_ci:
+  ci:
     strategy:
       matrix:
-        env:
-          - ROS_DISTRO: kinetic
-          - ROS_DISTRO: melodic
-          - ROS_DISTRO: noetic
-    runs-on: ubuntu-latest
+        include:
+          - os: ubuntu-20.04
+            distro: noetic
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
-      - uses: 'ros-industrial/industrial_ci@master'
-        env: ${{matrix.env}}
+      - uses: ros-tooling/setup-ros@v0.7
+        with:
+          required-ros-distributions: ${{ matrix.distro }}
+      - run: sudo apt remove python3-openssl -y
+      - uses: ros-tooling/action-ros-ci@v0.4
+        with:
+          package-name: ${{ matrix.package-name }}
+          target-ros1-distro: ${{ matrix.distro }}

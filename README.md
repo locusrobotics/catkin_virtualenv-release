@@ -14,6 +14,12 @@ wrapper scripts for any Python scripts in the package. Both will be included in 
 
 This library is GPL licensed due to the inclusion of dh_virtualenv.
 
+Compatibility:
+- Python 3.7+
+- Ubuntu 20.04+, maybe others
+- ROS Noetic, maybe others
+- `catkin-tools`, `colcon`, `catkin_make_isolated` (i.e. ros_buildfarm), but not `catkin_make`
+
 For general help, please check the [FAQ](http://answers.ros.org/questions/tags:catkin_virtualenv). Report bugs on the [issue tracker](https://github.com/locusrobotics/catkin_virtualenv/issues).
 
 ## Exporting python requirements
@@ -113,16 +119,22 @@ catkin_generate_virtualenv(
   INPUT_REQUIREMENTS requirements.in
 
   # Select an alternative python interpreter - it must be installed on the system.
-  PYTHON_INTERPRETER python3.7  # Default python2
+  PYTHON_INTERPRETER python3.7  # Default python3
 
   # Choose not to use underlying system packages. This excludes any python packages installed by apt or system-pip from the environment.
   USE_SYSTEM_PACKAGES FALSE  # Default TRUE
 
   # Disable including pip requirements from catkin dependencies of this package.
   ISOLATE_REQUIREMENTS TRUE  # Default FALSE
+  # Note: due to https://github.com/nose-devs/nose/issues/1099 and nose being unmaintained, using this option will prevent catkin_add_nosetests from working.
+  # Hence CATKIN_IGNORE in the test_catkin_virtualenv_isolated package. `nose-py3` seems to be a decent stopgap if used to replace `nose` in `catkin_virtualenv/requirements.txt`
+  # but https://github.com/atsb/nose-py3/issues/9 is currently a show-stopper.
 
   # Disable creating a unit test to verify that package requirements are locked.
   CHECK_VENV FALSE  # Default TRUE
+
+  # Disable renaming the process names to hide the interpreter name, this has can create issues when executing the process as root.
+  RENAME_PROCESS FALSE # Default TRUE
 
   # Provide extra arguments to the underlying pip invocation
   EXTRA_PIP_ARGS
@@ -150,7 +162,9 @@ at build time. You should check both `requirements.in` and `requirements.txt` in
 
 To regenerate the `requirements.txt` file, either delete it and rebuild the project, or run this command from your project directory:
 
-`catkin build --this --no-deps --catkin-make-args venv_lock`
+`catkin build --this --no-deps --catkin-make-args <PROJECT_NAME>_venv_lock` where `<PROJECT_NAME>` is the name for the project as specified in the package's CMakeLists.txt.
+
+Alternatively, you can specify the package name `catkin build <PACKAGE_NAME> --no-deps --catkin-make-args <PROJECT_NAME>_venv_lock`
 
 To migrate a package from catkin_virtualenv <=0.5 to use lock files:
 
