@@ -1,3 +1,0 @@
-requests>=2
-packaging
-urllib3>=2
